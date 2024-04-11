@@ -13,7 +13,7 @@
                 "dynamodb:Scan"
             ],
             "Resource": [
-                "${dynamodb_table_items_arn}"
+                "${dynamodb_table_arn}"
             ]
         }
     ]

@@ -16,7 +16,9 @@ def lambda_handler(event, _):
         }
     }
     try:
-        setResponse(response, dynamodb_table.scan()['Items'], 200)
+        items = dynamodb_table.scan()['Items']
+        print("Items retrieved: ", len(items))
+        setResponse(response, items, 200)
     except Exception as e:
         setResponse(response, {"message": str(e)}, 500)
         print("Error 500")

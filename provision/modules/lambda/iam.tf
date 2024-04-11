@@ -17,14 +17,16 @@ resource "aws_iam_role" "lambda_execution_role" {
 resource "aws_iam_policy" "cloudwatch" {
   name        = "${var.function_name}-cloudwatch"
   description = "Policy allowing Lambda to use different services"
-  policy      = file("${path.module}/policies/cloudwatch.json")
+  policy = templatefile("${path.module}/policies/cloudwatch.json", {
+    cloudwatch_arn = aws_cloudwatch_log_group.this.arn
+  })
 }
 
 resource "aws_iam_policy" "dynamodb" {
   name        = "${var.function_name}-dynamodb"
   description = "Policy allowing store and retrieve of DynamoDB"
   policy = templatefile("${path.module}/policies/dynamodb.json", {
-    dynamodb_table_items_arn = var.items_table_arn
+    dynamodb_table_arn = var.items_table_arn
   })
 }
 

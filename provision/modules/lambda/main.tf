@@ -32,3 +32,7 @@ resource "aws_lambda_function_url" "this" {
     max_age       = 86400
   }
 }
+
+resource "aws_cloudwatch_log_group" "this" {
+  name = "/aws/lambda/${var.function_name}"
+}
