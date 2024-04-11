@@ -22,7 +22,7 @@ def storeItem(item, id):
     })
     response = {"message": "Item stored successfully!"}
     # Log and structured information
-    logger.info("Stored Item", item=item, lenght=len(item), is_palindrome=isPalindrome(item))
+    logger.info("Item stored successfully", item=item, lenght=len(item), is_palindrome=isPalindrome(item), action="store_item")
     return response
 
 def setResponse(response, message, statusCode):
@@ -62,7 +62,7 @@ def lambda_handler(event, context: LambdaContext):
             items = dynamodb_table.scan()['Items']
             setResponse(response, items, 200)
             # Log and structured information
-            logger.info("successfully completed", status=200, items_count=len(items))
+            logger.info("successfully completed", status=200, items_count=len(items), action="fetch_items")
         else:
             response['statusCode'] = 400
             response['body'] = json.dumps({'message': 'Route does not exist'})
