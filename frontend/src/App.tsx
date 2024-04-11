@@ -1,27 +1,39 @@
-import { useState } from "react";
-import { PaperAirplaneIcon } from "@heroicons/react/20/solid";
+import { useState, useEffect } from "react";
+import { PlusIcon } from "@heroicons/react/20/solid";
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_STORE_URL = import.meta.env.VITE_API_STORE_URL;
+const API_GET_URL = import.meta.env.VITE_API_GET_URL;
 
 function App() {
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [conversation, setConversation] = useState<any[]>([]);
 
+  useEffect(() => {
+    fetch(API_GET_URL, {
+      headers: {
+        "Content-Type": "application/json"
+      },
+    }).then((response) => {
+      console.log(response);
+    })
+  }, [])
+
   const sendMessage = async () => {
     setIsLoading(true);
     setConversation([...conversation, { content: message, role: "user" }, { content: null, role: "system" }]);
 
-    const response = await fetch(API_URL, {
+    const response = await fetch(API_STORE_URL, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
-        "Session-Id": 'abc',
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         item: message
       }),
     });
+    if (response.status === 200) {
+    }
     setMessage("");
     setIsLoading(false);
   }
@@ -41,29 +53,29 @@ function App() {
         />
       </div>
       <div className="mx-auto max-w-2xl text-center">
-        <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Observability & Monitoring TODO List</h2>
+        <h2 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-4xl">Observability & Monitoring</h2>
+        <p className="text-xl text-gray-600 py-5">TODO List</p>
         <div className="flex flex-col w-full py-2 flex-grow md:py-3 md:pl-4 relative border bg-white border-gray-900/50 text-black :bg-gray-700 rounded-md shadow-[0_0_15px_rgba(0,0,0,0.10)]">
           <textarea
             value={message}
             tabIndex={0}
             disabled={isLoading}
-            data-id="root"
             style={{
               height: "24px",
               maxHeight: "200px",
               overflowY: "hidden",
             }}
             placeholder="Send a message..."
-            className="m-0 w-full resize-none border-0 bg-transparent p-0 focus:ring-0 focus-visible:ring-0 pl-2 md:pl-0"
+            className="m-0 w-full resize-none border-0 bg-transparent p-0 pr-7 focus:ring-0 focus-visible:ring-0 pl-2 md:pl-0"
             onChange={(e) => setMessage(e.target.value)}
           // onKeyDown={handleKeypress}
           ></textarea>
           <button
             disabled={isLoading || message?.length === 0}
             onClick={sendMessage}
-            className="absolute p-1 rounded-md bottom-1.5 md:bottom-2.5 bg-transparent disabled:bg-gray-500 bg-user-message right-1 md:right-2 disabled:opacity-40"
+            className="absolute p-1 rounded-md bottom-1.5 md:bottom-2.5 bg-gray-600 disabled:bg-gray-500 bg-user-message right-1 md:right-2 disabled:opacity-40"
           >
-            <PaperAirplaneIcon className="h-6 w-6 mr-1 text-blue-500" />
+            <PlusIcon className="h-6 w-6 text-white" />
           </button>
         </div>
       </div>

@@ -1,7 +1,7 @@
 data "archive_file" "lambda" {
   type        = "zip"
-  source_file = "${path.root}/../backend/lambda.py"
-  output_path = "lambda.zip"
+  source_file = var.source_file
+  output_path = "${var.function_name}.zip"
 }
 
 resource "aws_lambda_function" "this" {
@@ -27,7 +27,7 @@ resource "aws_lambda_function_url" "this" {
 
   cors {
     allow_origins = ["*"]
-    allow_methods = ["POST"]
+    allow_methods = var.endpoint_allowed_methods
     allow_headers = ["*"]
     max_age       = 86400
   }

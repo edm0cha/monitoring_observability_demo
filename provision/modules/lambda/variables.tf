@@ -3,12 +3,16 @@ variable "function_name" {
   description = "Unique name for your Lambda Function"
 }
 
+variable "source_file" {
+  type        = string
+  description = "Path to the source code of your Lambda Function"
+}
+
 variable "handler" {
   type        = string
   description = "Function entrypoint in your code."
   default     = "lambda.lambda_handler"
 }
-
 
 variable "runtime" {
   type        = string
@@ -36,4 +40,10 @@ variable "items_table_name" {
 variable "items_table_arn" {
   type        = string
   description = "The arn of the DynamoDB table"
+}
+
+variable "endpoint_allowed_methods" {
+  type        = list(string)
+  description = "Allowed HTTP methods for the API Gateway endpoint"
+  default     = ["POST"]
 }
