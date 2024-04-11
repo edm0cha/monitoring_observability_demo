@@ -9,34 +9,55 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [conversation, setConversation] = useState<any[]>([]);
   const [items, setItems] = useState<any[]>([]);
+  const [session_id, setSessionId] = useState("");
 
   const fetchItems = async () => {
-    const response = await fetch(API_GET_URL);
+    // Send Session ID per Request
+    const response = await fetch(API_GET_URL, {
+      headers: {
+        "Content-Type": "application/json",
+        "Session-Id": session_id,
+      },
+    });
+    const data = await response.json();
     if (response.ok) {
-      const data = await response.json();
       setItems(data);
+    } else {
+      alert(data.message)
     }
   }
 
+  // Added a unique session id for connection
+  const uid = function () {
+    return Date.now().toString(36) + Math.random().toString(36).slice(2);
+  };
+
   useEffect(() => {
     fetchItems();
+    if (!session_id) {
+      setSessionId(uid());
+    }
   }, [])
 
   const sendMessage = async () => {
     setIsLoading(true);
     setConversation([...conversation, { content: message, role: "user" }, { content: null, role: "system" }]);
-
+    // Send Session ID per Request
     const response = await fetch(API_STORE_URL, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Session-Id": session_id,
       },
       body: JSON.stringify({
         item: message
       }),
     });
-    if (response.status === 200) {
+    if (response.ok) {
       fetchItems();
+    } else {
+      const data = await response.json();
+      alert(data.message)
     }
     setMessage("");
     setIsLoading(false);
