@@ -23,13 +23,13 @@ variable "runtime" {
 variable "timeout" {
   type        = number
   description = "How long can run before throwing a timeout erorr"
-  default     = 200
+  default     = 80
 }
 
 variable "memory_size" {
   type        = number
   description = "The memory size of the machine running the function"
-  default     = 500
+  default     = 256
 }
 
 variable "items_table_name" {
