@@ -5,8 +5,13 @@ import boto3
 dynamodb = boto3.resource('dynamodb')
 dynamodb_table = dynamodb.Table(os.environ['ITEMS_TABLE_NAME'])
 
+def isPalindrome(s):
+    return s == s[::-1]
+
 def storeItem(item, id):
     print("Storing item: ", item)
+    print("Item Lenght: ", len(item))
+    print("Is Item Palindrome: ", isPalindrome(item))
     dynamodb_table.put_item(Item = {
         'id': id,
         'item': item
@@ -27,11 +32,10 @@ def lambda_handler(event, _):
     }
     try:
         request_id = event["requestContext"]["requestId"]
-        print("requestId:" ,request_id)
+        print("Rceived connection requestId:" ,request_id)
         request_body = json.loads(event["body"])
         item = request_body.get("item", "empty_item")
-        body_response = storeItem(item, request_id)
-        setResponse(response, {"message": "Item stored successfully!"}, 200)
+        setResponse(response, storeItem(item, request_id) , 200)
         print("Successfully Completed with code 200")
     except Exception as e:
         setResponse(response, {"message": str(e)}, 500)

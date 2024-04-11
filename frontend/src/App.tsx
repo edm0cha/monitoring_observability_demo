@@ -8,15 +8,18 @@ function App() {
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [conversation, setConversation] = useState<any[]>([]);
+  const [items, setItems] = useState<any[]>([]);
+
+  const fetchItems = async () => {
+    const response = await fetch(API_GET_URL);
+    if (response.ok) {
+      const data = await response.json();
+      setItems(data);
+    }
+  }
 
   useEffect(() => {
-    fetch(API_GET_URL, {
-      headers: {
-        "Content-Type": "application/json"
-      },
-    }).then((response) => {
-      console.log(response);
-    })
+    fetchItems();
   }, [])
 
   const sendMessage = async () => {
@@ -33,10 +36,19 @@ function App() {
       }),
     });
     if (response.status === 200) {
+      fetchItems();
     }
     setMessage("");
     setIsLoading(false);
   }
+
+  const handleKeypress = (e: any) => {
+    // Triggers by pressing the enter key
+    if (e.keyCode == 13 && !e.shiftKey) {
+      sendMessage();
+      e.preventDefault();
+    }
+  };
 
   return (
     <div className="isolate bg-white px-6 py-16 sm:py-20 lg:px-8">
@@ -68,7 +80,7 @@ function App() {
             placeholder="Send a message..."
             className="m-0 w-full resize-none border-0 bg-transparent p-0 pr-7 focus:ring-0 focus-visible:ring-0 pl-2 md:pl-0"
             onChange={(e) => setMessage(e.target.value)}
-          // onKeyDown={handleKeypress}
+            onKeyDown={handleKeypress}
           ></textarea>
           <button
             disabled={isLoading || message?.length === 0}
@@ -78,6 +90,22 @@ function App() {
             <PlusIcon className="h-6 w-6 text-white" />
           </button>
         </div>
+        <table className="table-auto w-full mt-5">
+          <thead>
+            <tr>
+              <th className="px-4 py-2">Id</th>
+              <th className="px-4 py-2">Item</th>
+            </tr>
+          </thead>
+          <tbody>
+            {items.map((item, index) => (
+              <tr key={index}>
+                <td className="border px-4 py-2">{item.id}</td>
+                <td className="border px-4 py-2">{item.item}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   )
