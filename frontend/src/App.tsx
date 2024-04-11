@@ -94,6 +94,7 @@ function App() {
         <div className="grid gap-x-4 gap-y-6 sm:grid-cols-2">
           <div className="sm:col-span-2 flex flex-col w-full py-2 flex-grow md:py-3 md:pl-4 relative border bg-white border-gray-900/50 text-black :bg-gray-700 rounded-md shadow-[0_0_15px_rgba(0,0,0,0.10)]">
             <textarea
+              id="item"
               value={message}
               tabIndex={0}
               disabled={isLoading}
@@ -117,6 +118,7 @@ function App() {
           </div>
           {/* <div className="sm:col-span-2 flex flex-col w-full py-2 flex-grow md:py-3 md:pl-4 relative border bg-white border-gray-900/50 text-black :bg-gray-700 rounded-md shadow-[0_0_15px_rgba(0,0,0,0.10)]">
             <input
+              id="environment"
               value={environment}
               disabled={isLoading}
               style={{
