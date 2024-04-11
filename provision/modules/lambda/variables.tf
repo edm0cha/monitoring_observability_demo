@@ -27,3 +27,13 @@ variable "memory_size" {
   description = "The memory size of the machine running the function"
   default     = 500
 }
+
+variable "items_table_name" {
+  type        = string
+  description = "The name of the DynamoDB table"
+}
+
+variable "items_table_arn" {
+  type        = string
+  description = "The arn of the DynamoDB table"
+}

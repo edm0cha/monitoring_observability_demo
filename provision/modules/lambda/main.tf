@@ -11,16 +11,17 @@ resource "aws_lambda_function" "this" {
   handler          = var.handler
   runtime          = var.runtime
   timeout          = var.timeout
-  layers           = [aws_lambda_layer_version.requirements.arn, aws_lambda_layer_version.requirements-langchain.arn]
+  layers           = [aws_lambda_layer_version.requirements.arn]
   source_code_hash = data.archive_file.lambda.output_base64sha256
   memory_size      = var.memory_size
   environment {
     variables = {
+      ITEMS_TABLE_NAME = var.items_table_name
     }
   }
 }
 
-resource "aws_lambda_function_url" "genai_lambda_latest" {
+resource "aws_lambda_function_url" "this" {
   function_name      = aws_lambda_function.this.function_name
   authorization_type = "NONE"
 
