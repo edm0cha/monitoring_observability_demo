@@ -45,17 +45,18 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   }
 
   ordered_cache_behavior {
-    path_pattern             = "/items"
-    allowed_methods          = ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"]
-    cached_methods           = ["GET", "HEAD", "OPTIONS"]
-    compress                 = true
-    target_origin_id         = "${var.name}-lambda"
-    viewer_protocol_policy   = "redirect-to-https"
-    min_ttl                  = 0
-    default_ttl              = 0
-    max_ttl                  = 0
-    origin_request_policy_id = data.aws_cloudfront_origin_request_policy.all_viewer_except_host_header.id
-    cache_policy_id          = data.aws_cloudfront_cache_policy.managed_caching_disabled.id
+    path_pattern               = "/items"
+    allowed_methods            = ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"]
+    cached_methods             = ["GET", "HEAD", "OPTIONS"]
+    compress                   = true
+    target_origin_id           = "${var.name}-lambda"
+    viewer_protocol_policy     = "redirect-to-https"
+    min_ttl                    = 0
+    default_ttl                = 0
+    max_ttl                    = 0
+    origin_request_policy_id   = data.aws_cloudfront_origin_request_policy.all_viewer_except_host_header.id
+    cache_policy_id            = data.aws_cloudfront_cache_policy.managed_caching_disabled.id
+    response_headers_policy_id = data.aws_cloudfront_response_headers_policy.simple_cors.id
   }
 
   price_class = "PriceClass_200"

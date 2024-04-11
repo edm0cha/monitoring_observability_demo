@@ -10,6 +10,7 @@ function App() {
   const [conversation, setConversation] = useState<any[]>([]);
   const [items, setItems] = useState<any[]>([]);
   const [session_id, setSessionId] = useState("");
+  // const [environment, setEnvironment] = useState("development");
 
   const fetchItems = async () => {
     // Send Session ID per Request
@@ -17,6 +18,7 @@ function App() {
       headers: {
         "Content-Type": "application/json",
         "Session-Id": session_id,
+        // "Environment": environment
       },
     });
     const data = await response.json();
@@ -48,6 +50,7 @@ function App() {
       headers: {
         "Content-Type": "application/json",
         "Session-Id": session_id,
+        // "Environment": environment,
       },
       body: JSON.stringify({
         item: message
@@ -88,28 +91,43 @@ function App() {
       <div className="mx-auto max-w-2xl text-center">
         <h2 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-4xl">Observability & Monitoring</h2>
         <p className="text-xl text-gray-600 py-5">TODO List</p>
-        <div className="flex flex-col w-full py-2 flex-grow md:py-3 md:pl-4 relative border bg-white border-gray-900/50 text-black :bg-gray-700 rounded-md shadow-[0_0_15px_rgba(0,0,0,0.10)]">
-          <textarea
-            value={message}
-            tabIndex={0}
-            disabled={isLoading}
-            style={{
-              height: "24px",
-              maxHeight: "200px",
-              overflowY: "hidden",
-            }}
-            placeholder="Send a message..."
-            className="m-0 w-full resize-none border-0 bg-transparent p-0 pr-7 focus:ring-0 focus-visible:ring-0 pl-2 md:pl-0"
-            onChange={(e) => setMessage(e.target.value)}
-            onKeyDown={handleKeypress}
-          ></textarea>
-          <button
-            disabled={isLoading || message?.length === 0}
-            onClick={sendMessage}
-            className="absolute p-1 rounded-md bottom-1.5 md:bottom-2.5 bg-gray-600 disabled:bg-gray-500 bg-user-message right-1 md:right-2 disabled:opacity-40"
-          >
-            <PlusIcon className="h-6 w-6 text-white" />
-          </button>
+        <div className="grid gap-x-4 gap-y-6 sm:grid-cols-2">
+          <div className="sm:col-span-2 flex flex-col w-full py-2 flex-grow md:py-3 md:pl-4 relative border bg-white border-gray-900/50 text-black :bg-gray-700 rounded-md shadow-[0_0_15px_rgba(0,0,0,0.10)]">
+            <textarea
+              value={message}
+              tabIndex={0}
+              disabled={isLoading}
+              style={{
+                height: "24px",
+                maxHeight: "200px",
+                overflowY: "hidden",
+              }}
+              placeholder="Send a message..."
+              className="m-0 w-full resize-none border-0 bg-transparent p-0 pr-7 focus:ring-0 focus-visible:ring-0 pl-2 md:pl-0"
+              onChange={(e) => setMessage(e.target.value)}
+              onKeyDown={handleKeypress}
+            ></textarea>
+            <button
+              disabled={isLoading || message?.length === 0}
+              onClick={sendMessage}
+              className="absolute p-1 rounded-md bottom-1.5 md:bottom-2.5 bg-gray-600 disabled:bg-gray-500 bg-user-message right-1 md:right-2 disabled:opacity-40"
+            >
+              <PlusIcon className="h-6 w-6 text-white" />
+            </button>
+          </div>
+          {/* <div className="sm:col-span-2 flex flex-col w-full py-2 flex-grow md:py-3 md:pl-4 relative border bg-white border-gray-900/50 text-black :bg-gray-700 rounded-md shadow-[0_0_15px_rgba(0,0,0,0.10)]">
+            <input
+              value={environment}
+              disabled={isLoading}
+              style={{
+                height: "24px",
+                maxHeight: "200px",
+                overflowY: "hidden",
+              }}
+              onChange={(e) => setEnvironment(e.target.value)}
+              className="m-0 w-full resize-none border-0 bg-transparent p-0 pr-7 focus:ring-0 focus-visible:ring-0 pl-2 md:pl-0"
+            />
+          </div> */}
         </div>
         <table className="table-auto w-full mt-5">
           <thead>
