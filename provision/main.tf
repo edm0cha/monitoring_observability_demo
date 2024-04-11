@@ -17,3 +17,11 @@ module "static" {
   name         = "${var.project_name}-static-content"
   function_url = module.lambda.function_url
 }
+
+module "dashboard" {
+  source              = "./modules/dashboard"
+  name                = var.project_name
+  region              = var.region
+  function_name       = "${var.project_name}-items"
+  dynamodb_table_name = module.items.name
+}
