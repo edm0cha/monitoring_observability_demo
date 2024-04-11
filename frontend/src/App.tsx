@@ -19,10 +19,11 @@ function App() {
         "Session-Id": 'abc',
       },
       body: JSON.stringify({
-        question: message
+        item: message
       }),
     });
     setMessage("");
+    setIsLoading(false);
   }
 
   return (
@@ -40,7 +41,7 @@ function App() {
         />
       </div>
       <div className="mx-auto max-w-2xl text-center">
-        <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Observability & Monitoring Demo</h2>
+        <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Observability & Monitoring TODO List</h2>
         <div className="flex flex-col w-full py-2 flex-grow md:py-3 md:pl-4 relative border bg-white border-gray-900/50 text-black :bg-gray-700 rounded-md shadow-[0_0_15px_rgba(0,0,0,0.10)]">
           <textarea
             value={message}
