@@ -11,6 +11,24 @@
 <body>
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
+  <script>
+    (function (n, i, v, r, s, c, x, z) { x = window.AwsRumClient = { q: [], n: n, i: i, v: v, r: r, c: c }; window[n] = function (c, p) { x.q.push({ c: c, p: p }); }; z = document.createElement('script'); z.async = true; z.src = s; document.head.insertBefore(z, document.head.getElementsByTagName('script')[0]); })(
+      'cwr',
+      'b948d4a4-d742-4173-af2a-c32b4f3bc5da',
+      '1.0.0',
+      'us-east-1',
+      'https://client.rum.us-east-1.amazonaws.com/1.16.1/cwr.js',
+      {
+        sessionSampleRate: 1,
+        guestRoleArn: "arn:aws:iam::131578276461:role/observability-demo-rum-cognito-unauthenticated",
+        identityPoolId: "us-east-1:d4df6535-ebc9-4860-b19c-d60d526800a2",
+        endpoint: "https://dataplane.rum.us-east-1.amazonaws.com",
+        telemetries: ["http", "errors", "performance"],
+        allowCookies: true,
+        enableXRay: false
+      }
+    );
+  </script>
 </body>
 
 </html>

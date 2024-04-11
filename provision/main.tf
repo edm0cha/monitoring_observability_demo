@@ -25,3 +25,10 @@ module "dashboard" {
   function_name       = "${var.project_name}-items"
   dynamodb_table_name = module.items.name
 }
+
+module "rum" {
+  source      = "./modules/RUM"
+  name        = var.project_name
+  domain_name = module.static.domain_name
+  aws_region  = var.region
+}
