@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { PlusIcon } from "@heroicons/react/20/solid";
 
-const API_STORE_URL = import.meta.env.VITE_API_STORE_URL;
-const API_GET_URL = import.meta.env.VITE_API_GET_URL;
+const API_URL = import.meta.env.VITE_API_URL;
 
 function App() {
   const [message, setMessage] = useState("");
@@ -11,7 +10,7 @@ function App() {
   const [items, setItems] = useState<any[]>([]);
 
   const fetchItems = async () => {
-    const response = await fetch(API_GET_URL);
+    const response = await fetch(`${API_URL}/items`);
     if (response.ok) {
       const data = await response.json();
       setItems(data);
@@ -26,7 +25,7 @@ function App() {
     setIsLoading(true);
     setConversation([...conversation, { content: message, role: "user" }, { content: null, role: "system" }]);
 
-    const response = await fetch(API_STORE_URL, {
+    const response = await fetch(`${API_URL}/items`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
