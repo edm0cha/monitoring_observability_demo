@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { PlusIcon } from "@heroicons/react/20/solid";
 
-const API_STORE_URL = import.meta.env.VITE_API_STORE_URL;
-const API_GET_URL = import.meta.env.VITE_API_GET_URL;
+const API_URL = import.meta.env.VITE_API_URL;
 
 function App() {
   const [message, setMessage] = useState("");
@@ -12,12 +11,11 @@ function App() {
   const [session_id, setSessionId] = useState("");
 
   const fetchItems = async () => {
-    // Send Session ID per Request
-    const response = await fetch(API_GET_URL, {
+    const response = await fetch(`${API_URL}/items`, {
       headers: {
         "Content-Type": "application/json",
         "Session-Id": session_id,
-      },
+      }
     });
     const data = await response.json();
     if (response.ok) {
@@ -42,8 +40,8 @@ function App() {
   const sendMessage = async () => {
     setIsLoading(true);
     setConversation([...conversation, { content: message, role: "user" }, { content: null, role: "system" }]);
-    // Send Session ID per Request
-    const response = await fetch(API_STORE_URL, {
+
+    const response = await fetch(`${API_URL}/items`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
