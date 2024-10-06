@@ -1,0 +1,9 @@
+fields @timestamp, @message, @logStream, @log
+| sort @timestamp desc
+| filter @message like /Storing item: arbol/
+| limit 10000
+
+fields @timestamp, @message, @logStream, @log
+| sort @timestamp desc
+| filter is_palindrome=1
+| limit 10000
