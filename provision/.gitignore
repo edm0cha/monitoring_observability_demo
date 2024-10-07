@@ -1,3 +1,4 @@
 *.tfvars
 .terraform
 .terraform.*
+init.tf
