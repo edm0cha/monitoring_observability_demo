@@ -24,7 +24,7 @@ yarn build
 Once you deploy all the infrastructure with terraform replace the value of the assigned Cloudfront URL, rebuild the project and apply again the changes with terraform
 
 ## Infrastructure with Terraform
-To initialize this project you need first to create a bucket and a dynamodb table to manage the terraform state and modify the init.tf file with the name of your bucket a table
+To initialize this project you need first to create a bucket and a dynamodb table to manage the terraform state, rename the init.template.tf file to init.tf, uncomment the code and replace the bucket a table values with your resources
 
 ```
 terraform {
@@ -36,5 +36,11 @@ terraform {
     encrypt        = true
   }
 }
+```
 
+Initialize, verify and apply the plan of terraform
+```
+terraform init
+terraform plan
+terraform apply
 ```
