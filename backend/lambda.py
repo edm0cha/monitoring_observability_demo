@@ -32,8 +32,11 @@ def lambda_handler(event, _):
     }
     try:
         route = f"{event["requestContext"]["http"]["path"]} {event["requestContext"]["http"]["method"]}"
+        
+        request_id = event["requestContext"]["requestId"]
+
         if route == '/items POST':
-            request_id = event["requestContext"]["requestId"]
+            
             print("Rceived connection requestId:" ,request_id)
             request_body = json.loads(event["body"])
             item = request_body.get("item", "empty_item")
@@ -41,7 +44,7 @@ def lambda_handler(event, _):
             print("Successfully Completed with code 200")
         elif route == '/items GET':
             items = dynamodb_table.scan()['Items']
-            print("Items retrieved: ", len(items))
+            print("Items retrieved: ", len(items), request_id)
             setResponse(response, items, 200)
         else:
             response['statusCode'] = 400
