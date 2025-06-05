@@ -44,3 +44,10 @@ terraform init
 terraform plan
 terraform apply
 ```
+
+# Demo Scenarios
+This demo is divided into 4 different scenarios, this repository has the following branches were the scenarios are defined and you can apply the changes with Terraform:
+- (feat/1-add-session-id)[https://github.com/edm0cha/monitoring_observability_demo/tree/feat/1-add-session-id] Session ID added to the request from the frontend (needs to rebuild frontend) 
+- (feat/2-structured-logs)[https://github.com/edm0cha/monitoring_observability_demo/tree/feat/2-structured-logs] Add Powertools to replace all prints with structured logs
+- (feat/3-metrics)[https://github.com/edm0cha/monitoring_observability_demo/tree/feat/3-metrics] Add Powertools metrics to track all the fetch and store methods
+- (feat/4-dashboard)[https://github.com/edm0cha/monitoring_observability_demo/tree/feat/4-dashboard] Create a Cloudwatch Dashboard
