@@ -70,3 +70,10 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     cloudfront_default_certificate = true
   }
 }
+
+resource "null_resource" "invalidate_cf_cache" {
+  provisioner "local-exec" {
+    command = "aws cloudfront create-invalidation --distribution-id ${aws_cloudfront_distribution.s3_distribution.id} --paths '/*'"
+  }
+  depends_on = [aws_cloudfront_distribution.s3_distribution]
+}
