@@ -7,7 +7,7 @@ from aws_lambda_powertools import Metrics
 from aws_lambda_powertools.metrics import MetricUnit
 from aws_lambda_powertools.utilities.typing import LambdaContext
 
-logger = Logger()
+logger = Logger(service="observability_demo")
 # Initialize Metrics
 metrics = Metrics(service="todo-list", namespace="ServerlessTodoList")
 
