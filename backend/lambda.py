@@ -37,9 +37,10 @@ def lambda_handler(event, _):
             print("Session-Id Header missing")
             setResponse(response, {"message": "Session-Id Header missing"}, 400)
             return response
+        # Extract Request ID
+        request_id = event["requestContext"]["requestId"]
 
         if route == '/items POST':
-            request_id = event["requestContext"]["requestId"]
             print("Recived connection requestId:" ,request_id)
             request_body = json.loads(event["body"])
             item = request_body.get("item", "empty_item")
