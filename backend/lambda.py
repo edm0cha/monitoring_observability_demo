@@ -4,7 +4,7 @@ import boto3
 from aws_lambda_powertools import Logger
 from aws_lambda_powertools.utilities.typing import LambdaContext
 
-logger = Logger()
+logger = Logger(service="observability_demo")
 
 dynamodb = boto3.resource('dynamodb')
 dynamodb_table = dynamodb.Table(os.environ['ITEMS_TABLE_NAME'])
