@@ -9,9 +9,9 @@ def isPalindrome(s):
     return s == s[::-1]
 
 def storeItem(item, id):
-    print("Storing item: ", item)
-    print("Item Lenght: ", len(item))
-    print("Is Item Palindrome: ", isPalindrome(item))
+    print("Storing item: ", item, id)
+    print("Item Lenght: ", len(item), id)
+    print("Is Item Palindrome: ", isPalindrome(item), id)
     dynamodb_table.put_item(Item = {
         'id': id,
         'item': item
@@ -47,7 +47,7 @@ def lambda_handler(event, _):
             print("Successfully Completed with code 200")
         elif route == '/items GET':
             items = dynamodb_table.scan()['Items']
-            print("Items retrieved: ", len(items))
+            print("Items retrieved: ", len(items), request_id)
             setResponse(response, items, 200)
         else:
             response['statusCode'] = 400
