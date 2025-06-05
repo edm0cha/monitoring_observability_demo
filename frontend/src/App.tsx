@@ -31,10 +31,10 @@ function App() {
   };
 
   useEffect(() => {
-    fetchItems();
     if (!session_id) {
       setSessionId(uid());
     }
+    fetchItems();
   }, [])
 
   const sendMessage = async () => {
