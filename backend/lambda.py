@@ -38,17 +38,17 @@ def lambda_handler(event, _):
             setResponse(response, {"message": "Session-Id Header missing"}, 400)
             return response
         # Extract Request ID
-        request_id = event["requestContext"]["requestId"]
+        session_id = event["requestContext"]["session-id"]
 
         if route == '/items POST':
-            print("Recived connection requestId:" ,request_id)
+            print("Recived connection requestId:" ,session_id)
             request_body = json.loads(event["body"])
             item = request_body.get("item", "empty_item")
-            setResponse(response, storeItem(item, request_id) , 200)
+            setResponse(response, storeItem(item, session_id) , 200)
             print("Successfully Completed with code 200")
         elif route == '/items GET':
             items = dynamodb_table.scan()['Items']
-            print("Items retrieved: ", len(items), request_id)
+            print("Items retrieved: ", len(items), session_id)
             setResponse(response, items, 200)
         else:
             response['statusCode'] = 400
